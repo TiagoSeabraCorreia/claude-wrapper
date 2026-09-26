@@ -3,7 +3,7 @@ import { promptUser } from '../console-reader.js';
 import type { ChatWithClaude, Action, EnableAdaptiveThinking, EnableStreaming, ChangeMaxTokensValue, ChangeMaxTokensValueError } from './answer.model.js';
 import {EMPTY, of} from 'rxjs';
 
-export async function mapAnswerStringToDomainModel(answer: string): Promise<Observable<Action>> {
+export async function mapUserAnswerToAction(answer: string): Promise<Observable<Action>> {
     switch (answer) {
         case '1':
             const messageForClaude = await promptUser("Message for claude >");
@@ -15,6 +15,8 @@ export async function mapAnswerStringToDomainModel(answer: string): Promise<Obse
         case '4':
             const newMaxTokensValue = await promptUser("New value for maxTokens >");
             return of(mapChangeMaxTokensValueToDomainModel(newMaxTokensValue));
+        case '5':
+            return of
         default:
             console.log("This command is not available");
             return EMPTY;

@@ -9,4 +9,5 @@ export async function promptUser(prompt: string){
 
 export function closeConsoleReader(){
     rl.close();
+    console.log("Console reader closed.");
 }

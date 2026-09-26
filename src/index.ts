@@ -1,15 +1,9 @@
-import Anthropic from "@anthropic-ai/sdk";
-import { closeConsoleReader, promptUser } from "./console-reader.js";
-
+import { chat } from "./claude-chat/claude-chat.js";
 
 async function main(){
-
-    
-
-    
+    await chat();
 }
 
 main().then(() => {
-    closeConsoleReader();
-    console.log("Wrapper closed.");
+    console.log("Program exited");
 });
