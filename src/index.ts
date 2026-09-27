@@ -1,4 +1,4 @@
-import { chat } from "./claude-chat/claude-chat.js";
+import { chat } from "./chat/chat.js";
 
 async function main(){
     await chat();

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getUserConfig, setMaxTokens } from "./message-handler.js";
+import { getUserConfig, setMaxTokens } from "./user-config.js";
 describe('message-handler test suite', () => {
     describe('getUserConfig', () => {
         it('should only have 1 instance for userConfig', () => {

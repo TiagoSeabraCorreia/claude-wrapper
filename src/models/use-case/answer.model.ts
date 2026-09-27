@@ -1,5 +1,4 @@
 export interface ChatWithClaude {
-    messageForClaude: string;
     kind: 'chatWithClaude';
 }
 
@@ -16,14 +15,13 @@ export interface ChangeMaxTokensValue {
     newValue: number;
 }
 
-export interface ChangeMaxTokensValueError {
+/* export interface ChangeMaxTokensValueError {
     kind: 'tooLittle' | 'notLittleEnough' | 'NaN';
     value: string;
-}
+} */
 
 export type Action = 
  | ChatWithClaude
  | EnableAdaptiveThinking
  | EnableStreaming
- | ChangeMaxTokensValue
- | ChangeMaxTokensValueError;
+ | ChangeMaxTokensValue;

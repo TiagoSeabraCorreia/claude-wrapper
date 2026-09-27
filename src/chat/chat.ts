@@ -1,8 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { closeConsoleReader, promptUser } from "../console-reader.js";
-import { getUserConfig } from "../message-handler/message-handler.js";
-import type { UserConfig } from "../message-handler/message-handler.js";
-import { mapUserAnswerToAction } from "../models/answer.mapper.js";
+import { mapOptionToRequest } from "../models/request/request.mapper.js";
+import { getUserConfig, type UserConfig } from "../user-config/user-config.js";
+import type { Request } from "../models/request/request.model.js";
 
 interface RuntimeData {
     userConfig: UserConfig;
@@ -49,16 +49,23 @@ function showMenu(maxTokens: number): void{
     console.log('5. Exit');
 }
 
+async function handleRequest(request: Request){
+    console.log(request);   
+}
+
+
 export async function chat() {
     await _init();
     let run = true;
     while(run) {
         showMenu(runtimeData.userConfig.maxTokens);
-        const action = mapUserAnswerToAction(await promptUser("Command >"));
+        const request = mapOptionToRequest(await promptUser("Command >"));
+        await handleRequest(request);
         run=false;
     }
     closeConsoleReader();
 }
+
 
 async function sendMessageToClaude(client: any){
     const message = await client.messages.create({

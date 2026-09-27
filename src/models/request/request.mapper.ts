@@ -1,32 +1,39 @@
-import type { Observable} from 'rxjs';
-import { promptUser } from '../console-reader.js';
-import type { ChatWithClaude, Action, EnableAdaptiveThinking, EnableStreaming, ChangeMaxTokensValue, ChangeMaxTokensValueError } from './answer.model.js';
-import {EMPTY, of} from 'rxjs';
+import type { ChangeMaxTokensRequest, ChatWithClaudeRequest, EnableAdaptiveThinkingRequest, EnableStreamingRequest, ExitRequest, Request, RequestedActionDoesNotExist } from './request.model.js';
 
-export async function mapUserAnswerToAction(answer: string): Promise<Observable<Action>> {
-    switch (answer) {
+export function mapOptionToRequest(option: string): Request {
+    switch (option) {
         case '1':
-            const messageForClaude = await promptUser("Message for claude >");
-            return of(mapChatWithClaudeToDomainModel(messageForClaude));
+            return {
+                kind: 'chatWithClaude'
+            } satisfies ChatWithClaudeRequest;
         case '2':
-            return of(mapEnableAdaptiveThinking());
+            return {
+                kind: 'enableAdaptiveThinking'
+            } satisfies EnableAdaptiveThinkingRequest;
         case '3':
-            return of(mapEnableStreaming());   
+            return {
+                kind: 'enableStreaming'
+            } satisfies EnableStreamingRequest;
         case '4':
-            const newMaxTokensValue = await promptUser("New value for maxTokens >");
-            return of(mapChangeMaxTokensValueToDomainModel(newMaxTokensValue));
+            return {
+                kind: 'changeMaxTokens'
+            } satisfies ChangeMaxTokensRequest;  
         case '5':
-            return of
+            return {
+                kind: 'exitChat'
+            } satisfies ExitRequest;
         default:
             console.log("This command is not available");
-            return EMPTY;
+            return {
+                kind: 'requestedActionDoesNotExist'
+            } satisfies RequestedActionDoesNotExist
     }
 }
 
-function mapChatWithClaudeToDomainModel(messageForClaude: string){
+/* 
+function mapChatWithClaudeToDomainModel(){
     return {
         kind: 'chatWithClaude',
-        messageForClaude: messageForClaude
     } satisfies ChatWithClaude;
 }
 
@@ -63,4 +70,4 @@ function mapChangeMaxTokensValueToDomainModel(newValue: string):ChangeMaxTokensV
         kind: 'changeMaxTokens',
         newValue: valueCasted
     } satisfies ChangeMaxTokensValue;
-}
+}§ */
